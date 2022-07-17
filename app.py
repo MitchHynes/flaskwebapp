@@ -10,3 +10,7 @@ def hello_world():
 def linux_blog(post=None):
     return render_template("linuxblog.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
