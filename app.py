@@ -14,7 +14,3 @@ def linux_blog(post=None):
 def about():
     return render_template("about.html")
 
-@app.route("/base")
-def base():
-    #testing function, remove later
-    return render_template("base.html")
