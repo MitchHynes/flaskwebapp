@@ -18,20 +18,20 @@ r       {% block header %}
         <!-- Post Content-->
         {% block content %}
         <article class="mb-4">
+                    {% for post in posts %}
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-x1-7">
                     <h2 class="section-heading">{{ post.title }}</h2>
                     <br/>
                     {{ post.content }}<br/>
-                    <small>{{ post.date_posted }}</small><br/>
-                    <br/><br/>
-        <a href="{{ url_for("blog") }}" class="btn btn-outline-secondary btn-sm">Back to Blog</a>
+                    <small>{{ post.date_posted }}</small>
                     </div>
                 </div>
             </div>
             <br/>
         </article>
 
+            {% endfor %}
         {% endblock %}
 
