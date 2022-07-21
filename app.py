@@ -55,3 +55,9 @@ def add_post(post_title, post_content):
     post = Posts(title=post_title, content=post_content)
     db.session.add(post)
     db.session.commit()
+
+def delete_post():
+    posts = Posts.query.order_by(Posts.date_posted)
+    for post in posts:
+        db.session.delete(post)
+    db.session.commit()
