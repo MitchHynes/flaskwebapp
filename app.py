@@ -3,7 +3,6 @@ from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "slthwoyofmaWTSWPDLEYTYHSHWTHSHJFAWOdaoufowue"
 #add a datebase, sqlite right now, could swap it out with something else like mysql
@@ -21,17 +20,23 @@ class Posts(db.Model):
 
     def __repr__(self):
         return "<Title %r>" % self.title
+@app.route("/posts/<int:id>")
+def post(id):
+    post = Posts.query.get_or_404(id)
+    return render_template("post.html", post=post)
+
 
 @app.route("/posts")
 def posts():
     #Grab all the posts from the database
     posts = Posts.query.order_by(Posts.date_posted)
-    return render_template("post.html", posts=posts)
+    return render_template("posts.html", posts=posts)
 
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html") 
+    posts = Posts.query.order_by(Posts.date_posted)
+    return render_template("index.html", posts=posts) 
 
 @app.route("/blog")
 def linux_blog(post=None):
@@ -41,3 +46,8 @@ def linux_blog(post=None):
 def about():
     return render_template("about.html")
 
+#me testing database stuff, sure there's a better way, ask mike
+def add_post(post_title, post_content):
+    post = Posts(title=post_title, content=post_content)
+    db.session.add(post)
+    db.session.commit()
