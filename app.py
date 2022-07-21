@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "slthwoyofmaWTSWPDLEYTYHSHWTHSHJFAWOdaoufowue"
 #add a datebase, sqlite right now, could swap it out with something else like mysql
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 
