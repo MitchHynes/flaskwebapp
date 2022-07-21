@@ -34,17 +34,22 @@ def posts():
 
 
 @app.route("/")
-def hello_world():
+def blog():
     posts = Posts.query.order_by(Posts.date_posted)
     return render_template("index.html", posts=posts) 
 
-@app.route("/blog")
-def linux_blog(post=None):
-    return render_template("linuxblog.html")
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+#invalid URL
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
 #me testing database stuff, sure there's a better way, ask mike
 def add_post(post_title, post_content):
