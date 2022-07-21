@@ -1,15 +1,33 @@
 from flask import Flask, url_for, redirect, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "slthwoyofmaWTSWPDLEYTYHSHWTHSHJFAWOdaoufowue"
+#add a datebase, sqlite right now, could swap it out with something else like mysql
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
 
-#create a form class
-class NamerForm(FlaskForm):
-    name = StringField("What's your name?", validators=[DataRequired()])
-    submit = SubmitField("Submit")
+db = SQLAlchemy(app)
+
+#create a model, every database needs a moder
+class Posts(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+    content = db.Column(db.Text)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    slug = db.Column(db.String(255))
+
+    def __repr__(self):
+        return "<Title %r>" % self.title
+
+@app.route("/posts")
+def posts():
+    #Grab all the posts from the database
+    posts = Posts.query.order_by(Posts.date_posted)
+    return render_template("post.html", posts=posts)
+
 
 @app.route("/")
 def hello_world():
@@ -23,14 +41,3 @@ def linux_blog(post=None):
 def about():
     return render_template("about.html")
 
-#create name page
-@app.route("/name", methods=["GET","POST"])
-def name():
-    name = None
-    form = NamerForm()
-    #validate form
-    if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = "" #clear it for the next time around
-
-    return render_template("name.html", name=name, form=form)
