@@ -61,3 +61,4 @@ def delete_post():
     for post in posts:
         db.session.delete(post)
     db.session.commit()
+
