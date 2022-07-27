@@ -51,6 +51,7 @@ def page_not_found(e):
     return render_template("404.html"), 404
 
 #temporary methods to manage the database, replace with a better way 
+#call them from the python interpreter
 #when I learn a better way in databases course
 def add_post(post_title, post_content):
     post = Posts(title=post_title, content=post_content)
