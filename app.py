@@ -1,5 +1,4 @@
 from flask import Flask, url_for, redirect, render_template
-from flask_wtf import FlaskForm
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
