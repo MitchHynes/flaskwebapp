@@ -50,7 +50,8 @@ def about():
 def page_not_found(e):
     return render_template("404.html"), 404
 
-#me testing database stuff, sure there's a better way, ask mike
+#temporary methods to manage the database, replace with a better way 
+#when I learn a better way in databases course
 def add_post(post_title, post_content):
     post = Posts(title=post_title, content=post_content)
     db.session.add(post)
