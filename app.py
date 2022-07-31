@@ -63,3 +63,5 @@ def delete_post():
         db.session.delete(post)
     db.session.commit()
 
+if __name__ == "__main__":
+    application.run(host='0.0.0.0', port='8080')
